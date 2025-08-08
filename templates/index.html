@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonumAI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            color: #669999;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        select {
+            background-color: white;
+            color: black;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #669999;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .collapsible {
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 16px;
+        }
+        .arrow {
+            display: inline-block;
+            margin-right: 5px;
+            transition: transform 0.3s ease;
+        }
+        .arrow::before {
+            content: '\25B6';
+        }
+        .collapsible.active .arrow {
+            transform: rotate(90deg);
+        }
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            margin-bottom: 15px;
+        }
+        .category-input-container {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            margin-bottom: 15px;
+        }
+        #category-input {
+          flex-grow: 1; /* Allow input to grow */
+          border:none ;
+          outline:none ;
+          padding-left=5px
+        }
+         .category-tag {
+          display: inline-block;
+          background-color: #e0e0e0;
+          padding: 5px 10px;
+          margin: 2px;
+          border-radius: 3px;
+          font-size: 14px;
+          color: #333;
+        }
+        .close-btn {
+          margin-left: 8px;
+          cursor: pointer;
+          color: #ff0000;
+          font-weight: bold;
+        }
+        #category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to DonumAI!</h2>
+        <p>Meet DonumAI: Your personal AI Teacher created by Kannan Murugapandian.</p>
+
+        <form action="/serviceman" method="POST">
+            <label for="fname">Name: *</label>
+            <input type="text" id="fname" name="fname" placeholder="John Doe" required>
+
+            <label for="subject">Subject: *</label>
+            <input type="text" id="subject" name="subject" placeholder="Physics" required>
+
+            <label for="topic">Topic: *</label>
+            <input type="text" id="topic" name="topic" placeholder="Atmospheric Pressure - Measurement" required>
+
+            <label for="scope">Scope of the lesson: *</label>
+            <textarea id="scope" name="scope" placeholder="Content that must be covered within this lesson"></textarea>
+
+            <label for="grade">Grade: *</label>
+            <input type="text" id="grade" name="grade" placeholder="9" required>
+
+            <label for="curr">Select the curriculum you study in: *</label>
+            <select id="curr" name="curr" required>
+            <option value="British Curriculum">British Curriculum</option>
+            <option value="International Baccalaureate">International Baccalaureate</option>
+            <option value="American Curriculum">American Curriculum</option>
+            <option value="Indian Certificate of Secondary Education (ICSE)">Indian Certificate of Secondary Education (ICSE)</option>
+            <option value="Central Board of Secondary Education (CBSE)">Central Board of Secondary Education (CBSE)</option>
+            <option value="Indian School Certificate (ISC)">Indian School Certificate (ISC)</option>
+            <option value="French Curriculum">French Curriculum</option>
+            <option value="Canadian Curriculum">Canadian Curriculum</option>
+            <option value="Australian Curriculum">Australian Curriculum</option>
+            <option value="German Curriculum">German Curriculum</option>
+            <option value="International Primary Curriculum">International Primary Curriculum</option>
+            <option value="International Middle Years Curriculum">International Middle Years Curriculum</option>
+            <option value="Singapore Curriculum">Singapore Curriculum</option>
+            <option value="Japanese Curriculum">Japanese Curriculum</option>
+            <option value="Chinese Curriculum">Chinese Curriculum</option>
+            <option value="Dutch Curriculum">Dutch Curriculum</option>
+            <option value="Swiss Curriculum">Swiss Curriculum</option>
+            <option value="Italian Curriculum">Italian Curriculum</option>
+            <option value="Spanish Curriculum">Spanish Curriculum</option>
+            <option value="Swedish Curriculum">Swedish Curriculum</option>
+            <option value="Finnish Curriculum">Finnish Curriculum</option>
+            <option value="International General Certificate of Secondary Education">International General Certificate of Secondary Education</option>
+            </select>
+
+            <label for="scale">How familiar are you with the lesson: *</label>
+            <input type="range" id="scale" name="scale" min="1" max="10" value="1">
+            <p>Difficulty: <span id="demo"></span> (1 = Novice, 10 = Advanced)</p>
+
+            <p class="collapsible"><span class="arrow"></span>Advanced Options</p>
+            <div class="content">
+                <label for="teacher">Select a teacher: *</label>
+                <select id="teacher" name="teacher">
+                    <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    <option value="gemini-2.5-flash-lite-preview-06-17">Gemini 2.5 Flash-Lite Preview</option>
+                    <option value="gemini-2.5-flash-preview-tts">Gemini 2.5 Flash Preview TTS</option>
+                    <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                    <option value="gemini-2.0-flash-lite">Gemini 2.0 Flash Lite</option>
+                    <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+                    <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                </select>
+                <label for="language">Language: *</label>
+                <select id="language" name="language">
+                    <option value="English">English</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Arabic">Arabic</option>
+                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                    <option value="Bengali">Bengali</option>
+                    <option value="Bulgarian">Bulgarian</option>
+                    <option value="Chinese (Simplified/Traditional)">Chinese (Simplified/Traditional)</option>
+                    <option value="Croatian">Croatian</option>
+                    <option value="Czech">Czech</option>
+                    <option value="Danish">Danish</option>
+                    <option value="Dutch">Dutch</option>
+                    <option value="Estonian">Estonian</option>
+                    <option value="Farsi">Farsi</option>
+                    <option value="Finnish">Finnish</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Gujarati">Gujarati</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Hebrew">Hebrew</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Hungarian">Hungarian</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Kannada">Kannada</option>
+                    <option value="Latvian">Latvian</option>
+                    <option value="Lithuanian">Lithuanian</option>
+                    <option value="Malayalam">Malayalam</option>
+                    <option value="Marathi">Marathi</option>
+                    <option value="Norwegian">Norwegian</option>
+                    <option value="Polish">Polish</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Romanian">Romanian</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Serbian">Serbian</option>
+                    <option value="Slovak">Slovak</option>
+                    <option value="Slovenian">Slovenian</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Swahili">Swahili</option>
+                    <option value="Swedish">Swedish</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Telugu">Telugu</option>
+                    <option value="Thai">Thai</option>
+                    <option value="Turkish">Turkish</option>
+                    <option value="Ukrainian">Ukrainian</option>
+                    <option value="Urdu">Urdu</option>
+                    <option value="Vietnamese">Vietnamese</option>
+                </select>
+                <label for="teacher">How should your teacher be? *</label>
+                <p><i>If you have selected a language other than English, your lesson may not be generated in the chosen slang</i></p>
+                <select id="mode" name="mode">
+                    <option value="normal">Normal</option>
+                    <option value="formal academic">Formal Academic</option>
+                    <option value="informal conversational">Informal Conversational</option>
+                    <option value="genz">Gen Z</option>
+                    <option value="Millennial">Millennial</option>
+                    <option value="genx">Gen X</option>
+                    <option value="Boomer">Boomer</option>
+                    <option value="Shakespearean">Shakespearean</option>
+                </select>
+                <label for="hobbies">What are your hobbies?</label>
+                <p><i>Answer this if you want key concepts to be relatable to you!</i></p>
+                <input type="text" id="hobbies" name="hobbies" placeholder="Programming, Basketball, I have no idea">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
+        </form>
+        <p>PS: DonumAI just got its own podcast. Check it out -</p>
+        <iframe title="Learn with DonumAI" allowtransparency="true" height="315" width="100%" style="border: none; min-width: min(100%, 430px);height:315px;" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/player-v2/?i=4zgca-139112c-pbblog-playlist&share=1&download=1&rtl=0&fonts=Arial&skin=1&font-color=&logo_link=episode_page&order=episodic&limit=10&filter=all&ss=a713390a017602015775e868a2cf26b0&btn-skin=7&size=315" loading="lazy" allowfullscreen=""></iframe>
+        </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Difficulty slider functionality
+        var slider = document.getElementById("scale");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+
+        // Collapsible functionality
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    content.style.marginBottom = "0";
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.style.marginBottom = "15px";
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
