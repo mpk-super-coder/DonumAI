@@ -314,7 +314,7 @@ Constraints:
 
     print("Command constructed successfully.")  # Print after the command is constructed
 
-    gemini_api_key = "AIzaSyBdgGf04-oKQBt2qm22uKb4oXrgvCI7ZJo"
+    gemini_api_key = "API_KEY"
     print("Configuring Gemini API with provided key.")  # Print before API configuration
     genai.configure(api_key=gemini_api_key)
 
